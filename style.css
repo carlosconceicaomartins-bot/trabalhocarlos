@@ -1,149 +1,748 @@
+/* ================================
+   RESET
+================================ */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+/* ================================
+   BODY
+================================ */
+
 body {
-    font-family: Arial, sans-serif;
-    background: #0f172a;
+    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(14, 165, 233, 0.15),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(59, 130, 246, 0.12),
+            transparent 35%
+        ),
+        #0f172a;
+
     color: white;
+
     padding: 30px;
+
+    min-height: 100vh;
 }
+
+
+/* ================================
+   HEADER
+================================ */
 
 header {
     text-align: center;
-    margin-bottom: 40px;
+
+    margin-bottom: 45px;
+
+    padding: 35px 20px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(30, 41, 59, 0.95),
+            rgba(15, 23, 42, 0.95)
+        );
+
+    border: 1px solid #334155;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.25);
+
+    position: relative;
+
+    overflow: hidden;
 }
+
+
+/* brilho no header */
+
+header::before {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    background: #38bdf8;
+
+    filter: blur(100px);
+
+    opacity: 0.12;
+
+    top: -120px;
+    left: -80px;
+}
+
+header::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    background: #2563eb;
+
+    filter: blur(100px);
+
+    opacity: 0.12;
+
+    bottom: -150px;
+    right: -80px;
+}
+
 
 header h1 {
-    font-size: 36px;
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 38px;
+
     color: #38bdf8;
-    margin-bottom: 10px;
+
+    margin-bottom: 12px;
+
+    text-shadow:
+        0 0 20px rgba(56, 189, 248, 0.4);
 }
 
+
 header p {
+    position: relative;
+
+    z-index: 2;
+
     color: #94a3b8;
+
     font-size: 18px;
 }
 
-main {
-    max-width: 900px;
-    margin: auto;
+
+/* ================================
+   CONTROLES
+================================ */
+
+.controles {
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+
+    flex-wrap: wrap;
 }
 
-.jogo {
-    display: flex;
-    align-items: center;
-    gap: 20px;
 
-    background: #1e293b;
+#pesquisa {
+    width: 320px;
 
-    padding: 15px;
+    padding: 14px 18px;
 
-    margin-bottom: 15px;
+    background: #0f172a;
+
+    color: white;
+
+    border: 1px solid #475569;
 
     border-radius: 12px;
 
-    border: 1px solid #334155;
+    outline: none;
+
+    font-size: 15px;
+
+    transition: 0.3s;
+
+    box-shadow:
+        inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+#pesquisa::placeholder {
+    color: #64748b;
+}
+
+
+#pesquisa:focus {
+    border-color: #38bdf8;
+
+    box-shadow:
+        0 0 0 3px rgba(56, 189, 248, 0.12),
+        0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+
+#modoEscuro {
+    padding: 14px 18px;
+
+    border: 1px solid #475569;
+
+    border-radius: 12px;
+
+    background: #1e293b;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 15px;
 
     transition: 0.3s;
 }
 
-.jogo:hover {
-    transform: translateY(-5px);
 
-    background: #263449;
-
-    border-color: #38bdf8;
-
-    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
-}
-
-.posicao {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    min-width: 50px;
-    height: 50px;
-
+#modoEscuro:hover {
     background: #38bdf8;
 
     color: #0f172a;
 
-    font-size: 22px;
+    border-color: #38bdf8;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(56, 189, 248, 0.2);
+}
+
+
+#contador {
+    margin-top: 18px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* ================================
+   MAIN
+================================ */
+
+main {
+    max-width: 900px;
+
+    margin: auto;
+}
+
+
+/* ================================
+   CARD DOS JOGOS
+================================ */
+
+.jogo {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1e293b,
+            #172033
+        );
+
+    padding: 18px;
+
+    margin-bottom: 18px;
+
+    border-radius: 18px;
+
+    border: 1px solid #334155;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+
+    opacity: 0;
+
+    transform: translateY(25px);
+}
+
+
+/* animação de entrada */
+
+.jogo.aparecer {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+
+/* linha brilhante */
+
+.jogo::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #38bdf8,
+            transparent
+        );
+
+    transition: 0.5s;
+}
+
+
+.jogo:hover::before {
+    left: 100%;
+}
+
+
+/* brilho interno */
+
+.jogo::after {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    background: #38bdf8;
+
+    filter: blur(100px);
+
+    opacity: 0;
+
+    right: -100px;
+    top: -80px;
+
+    transition: 0.4s;
+
+    pointer-events: none;
+}
+
+
+.jogo:hover::after {
+    opacity: 0.08;
+}
+
+
+/* hover */
+
+.jogo:hover {
+    transform: translateY(-6px) scale(1.01);
+
+    background:
+        linear-gradient(
+            135deg,
+            #263449,
+            #1e293b
+        );
+
+    border-color: #38bdf8;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(56, 189, 248, 0.08);
+}
+
+
+/* ================================
+   POSIÇÃO
+================================ */
+
+.posicao {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 52px;
+
+    height: 52px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #38bdf8,
+            #0284c7
+        );
+
+    color: #082f49;
+
+    font-size: 21px;
 
     font-weight: bold;
 
     border-radius: 50%;
+
+    box-shadow:
+        0 5px 15px rgba(56, 189, 248, 0.25);
+
+    transition: 0.3s;
 }
 
+
+.jogo:hover .posicao {
+    transform: scale(1.1) rotate(5deg);
+
+    box-shadow:
+        0 0 20px rgba(56, 189, 248, 0.5);
+}
+
+
+/* ================================
+   TOP 3
+================================ */
+
+.jogo:nth-child(1) .posicao {
+    background:
+        linear-gradient(
+            135deg,
+            #fde047,
+            #f59e0b
+        );
+
+    color: #422006;
+
+    box-shadow:
+        0 0 20px rgba(250, 204, 21, 0.35);
+}
+
+
+.jogo:nth-child(2) .posicao {
+    background:
+        linear-gradient(
+            135deg,
+            #e2e8f0,
+            #94a3b8
+        );
+
+    color: #1e293b;
+}
+
+
+.jogo:nth-child(3) .posicao {
+    background:
+        linear-gradient(
+            135deg,
+            #fb923c,
+            #b45309
+        );
+
+    color: #431407;
+}
+
+
+/* ================================
+   IMAGENS
+================================ */
+
 .jogo img {
-    width: 130px;
-    height: 80px;
+    position: relative;
+
+    z-index: 2;
+
+    width: 135px;
+
+    height: 85px;
 
     object-fit: cover;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     border: 2px solid #475569;
+
+    transition:
+        transform 0.4s,
+        border-color 0.3s,
+        box-shadow 0.3s;
 }
+
+
+.jogo:hover img {
+    transform: scale(1.08);
+
+    border-color: #38bdf8;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ================================
+   TEXTO
+================================ */
+
+.jogo div {
+    position: relative;
+
+    z-index: 2;
+}
+
 
 .jogo h2 {
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 
     color: #f8fafc;
+
+    font-size: 23px;
+
+    transition: 0.3s;
 }
+
+
+.jogo:hover h2 {
+    color: #38bdf8;
+}
+
 
 .jogo p {
     color: #94a3b8;
+
+    line-height: 1.5;
+
+    font-size: 15px;
 }
+
+
+/* ================================
+   FAVORITO
+================================ */
+
+.favorito {
+    margin-top: 13px;
+
+    padding: 9px 14px;
+
+    border: 1px solid #475569;
+
+    border-radius: 9px;
+
+    background: #0f172a;
+
+    color: #94a3b8;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+.favorito:hover {
+    border-color: #38bdf8;
+
+    color: #38bdf8;
+
+    transform: scale(1.05);
+}
+
+
+.favorito.ativo {
+    background: rgba(239, 68, 68, 0.12);
+
+    border-color: #ef4444;
+
+    color: #f87171;
+
+    box-shadow:
+        0 0 15px rgba(239, 68, 68, 0.1);
+}
+
+
+/* ================================
+   SEM RESULTADO
+================================ */
+
+#semResultado {
+    display: none;
+
+    text-align: center;
+
+    padding: 50px 20px;
+
+    color: #64748b;
+
+    font-size: 20px;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
 
 footer {
     text-align: center;
 
-    margin-top: 40px;
+    margin-top: 50px;
+
+    padding: 30px 20px;
 
     color: #64748b;
+
+    border-top: 1px solid #1e293b;
 }
+
+
+footer p:first-child {
+    color: #38bdf8;
+
+    font-size: 16px;
+}
+
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
 
 @media (max-width: 600px) {
 
     body {
-        padding: 20px;
+        padding: 15px;
     }
 
-    header h1 {
-        font-size: 26px;
+
+    header {
+        padding: 30px 15px;
+
+        margin-bottom: 30px;
     }
+
+
+    header h1 {
+        font-size: 27px;
+
+        line-height: 1.2;
+    }
+
 
     header p {
         font-size: 15px;
     }
 
-    .jogo {
-        gap: 12px;
-        padding: 12px;
+
+    .controles {
+        flex-direction: column;
+
+        width: 100%;
     }
+
+
+    #pesquisa {
+        width: 100%;
+    }
+
+
+    #modoEscuro {
+        width: 100%;
+    }
+
+
+    .jogo {
+        gap: 14px;
+
+        padding: 15px;
+
+        align-items: flex-start;
+    }
+
+
+    .jogo img {
+        width: 90px;
+
+        height: 65px;
+    }
+
 
     .posicao {
         min-width: 40px;
+
         height: 40px;
-        font-size: 18px;
+
+        font-size: 17px;
     }
 
-    .jogo img {
-        width: 80px;
-        height: 60px;
-    }
 
     .jogo h2 {
         font-size: 18px;
     }
 
+
     .jogo p {
         font-size: 13px;
     }
+
+
+    .favorito {
+        font-size: 12px;
+
+        padding: 8px 10px;
+    }
+}
+
+
+/* ================================
+   ANIMAÇÃO EXTRA
+================================ */
+
+@keyframes brilho {
+
+    0% {
+        box-shadow:
+            0 0 5px rgba(56, 189, 248, 0.1);
+    }
+
+    50% {
+        box-shadow:
+            0 0 20px rgba(56, 189, 248, 0.2);
+    }
+
+    100% {
+        box-shadow:
+            0 0 5px rgba(56, 189, 248, 0.1);
+    }
+}
+
+
+header {
+    animation: brilho 4s infinite;
 }
