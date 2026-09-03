@@ -1,135 +1,757 @@
+Sim. Aqui está somente o index.html, com tudo dentro dele: visual, animações, pesquisa, favoritos, modo escuro e interação nos jogos.
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Top 10 Jogos Mais Jogados</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🎮 Top 10 Jogos Mais Jogados</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            color: #222;
+            transition: 0.4s;
+        }
+
+        /* CABEÇALHO */
+
+        header {
+            text-align: center;
+            padding: 45px 20px;
+            color: white;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        header h1 {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 17px;
+        }
+
+        /* CONTROLES */
+
+        .controles {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        #pesquisa {
+            width: 320px;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #modoEscuro {
+            padding: 14px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #222;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        #modoEscuro:hover {
+            transform: scale(1.05);
+            background: #000;
+        }
+
+        #contador {
+            margin-top: 15px;
+        }
+
+        /* LISTA */
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* JOGOS */
+
+        .jogo {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            background: white;
+
+            padding: 22px;
+            margin-bottom: 20px;
+
+            border-radius: 18px;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+            cursor: pointer;
+
+            opacity: 0;
+            transform: translateY(30px);
+
+            transition: 0.3s;
+        }
+
+        .jogo.aparecer {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .jogo:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        /* IMAGENS */
+
+        .jogo img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .jogo:hover img {
+            transform: scale(1.08);
+        }
+
+        /* POSIÇÃO */
+
+        .posicao {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #6a11cb;
+            color: white;
+
+            border-radius: 50%;
+
+            font-weight: bold;
+        }
+
+        /* TOP 3 */
+
+        .jogo:nth-child(1) .posicao {
+            background: #ffd700;
+            color: #222;
+        }
+
+        .jogo:nth-child(2) .posicao {
+            background: #c0c0c0;
+            color: #222;
+        }
+
+        .jogo:nth-child(3) .posicao {
+            background: #cd7f32;
+        }
+
+        /* TEXTO */
+
+        .jogo h2 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .jogo p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* FAVORITO */
+
+        .favorito {
+            padding: 9px 14px;
+            border: none;
+            border-radius: 8px;
+            background: #eee;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .favorito:hover {
+            transform: scale(1.05);
+        }
+
+        .favorito.ativo {
+            background: #ffe1e8;
+            color: #e60035;
+            font-weight: bold;
+        }
+
+        /* SEM RESULTADO */
+
+        #semResultado {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            font-size: 20px;
+            color: #777;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #222;
+            color: white;
+        }
+
+        /* MODO ESCURO */
+
+        body.escuro {
+            background: #101010;
+            color: white;
+        }
+
+        body.escuro .jogo {
+            background: #1d1d1d;
+        }
+
+        body.escuro .jogo h2 {
+            color: white;
+        }
+
+        body.escuro .jogo p {
+            color: #bbb;
+        }
+
+        body.escuro .favorito {
+            background: #333;
+            color: white;
+        }
+
+        body.escuro .favorito.ativo {
+            background: #5c1f2d;
+            color: #ff6b8a;
+        }
+
+        /* CELULAR */
+
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 27px;
+            }
+
+            .controles {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #pesquisa {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            #modoEscuro {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .jogo {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 40px;
+            }
+
+            .jogo img {
+                width: 160px;
+                height: 160px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
+    <!-- CABEÇALHO -->
+
     <header>
+
         <h1>🎮 Top 10 Jogos Mais Jogados do Mundo</h1>
-        <p>Confira os jogos mais populares do mundo</p>
+
+        <p>
+            Confira os jogos mais populares do mundo
+        </p>
+
+        <div class="controles">
+
+            <input
+                type="text"
+                id="pesquisa"
+                placeholder="🔍 Pesquisar jogo..."
+            >
+
+            <button id="modoEscuro">
+                🌙 Modo escuro
+            </button>
+
+        </div>
+
+        <p id="contador">
+            10 jogos encontrados
+        </p>
+
     </header>
+
+
+    <!-- JOGOS -->
 
     <main>
 
-        <section class="jogo">
+        <section class="jogo" data-nome="Roblox">
+
             <span class="posicao">1</span>
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl6QAu7AQf5vxKBo32lFJIu9h0qL3vxSMWqdMgTAmEjQ&s=10" alt="Roblox">
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl6QAu7AQf5vxKBo32lFJIu9h0qL3vxSMWqdMgTAmEjQ&s=10"
+                alt="Roblox"
+            >
 
             <div>
                 <h2>Roblox</h2>
-                <p>Uma das maiores plataformas de jogos do mundo.</p>
+
+                <p>
+                    Uma das maiores plataformas de jogos do mundo.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
 
 
-        <section class="jogo">
+        <section class="jogo" data-nome="Minecraft">
+
             <span class="posicao">2</span>
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0l6Ve2wSuJQQbZ_PQTETI6xDgRbaI_kqh3E7Gn6GLh6Tj5ouvb4glUsR2&s=10" alt="Minecraft">
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0l6Ve2wSuJQQbZ_PQTETI6xDgRbaI_kqh3E7Gn6GLh6Tj5ouvb4glUsR2&s=10"
+                alt="Minecraft"
+            >
 
             <div>
                 <h2>Minecraft</h2>
-                <p>Jogo de construção, exploração e sobrevivência.</p>
+
+                <p>
+                    Jogo de construção, exploração e sobrevivência.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
 
 
-        <section class="jogo">
+        <section class="jogo" data-nome="League of Legends">
+
             <span class="posicao">3</span>
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUWiM-64wanZSqupBqSJWZkDWSd2zy7jTthDNTMQ0zMQ&s=10" alt="League of Legends">
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUWiM-64wanZSqupBqSJWZkDWSd2zy7jTthDNTMQ0zMQ&s=10"
+                alt="League of Legends"
+            >
 
             <div>
                 <h2>League of Legends</h2>
-                <p>Um dos jogos competitivos mais populares do mundo.</p>
+
+                <p>
+                    Um dos jogos competitivos mais populares do mundo.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
 
 
-        <section class="jogo">
+        <section class="jogo" data-nome="Fortnite">
+
             <span class="posicao">4</span>
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpCxJ75gcumradJrJ8a1N6-FRrw-IUWiPQcHxDHsxq1MevO0u2MbdGfRE&s=10" alt="Fortnite">
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpCxJ75gcumradJrJ8a1N6-FRrw-IUWiPQcHxDHsxq1MevO0u2MbdGfRE&s=10"
+                alt="Fortnite"
+            >
 
             <div>
                 <h2>Fortnite</h2>
-                <p>Battle Royale famoso por suas temporadas e eventos.</p>
+
+                <p>
+                    Battle Royale famoso por suas temporadas e eventos.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
 
 
-        <section class="jogo">
+        <section class="jogo" data-nome="Candy Crush Saga">
+
             <span class="posicao">5</span>
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLQUgSSShOfyHyHlgudpCHrnFWW2qYburuE3GHSuhL1g&s=10" alt="Candy Crush Saga">
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLQUgSSShOfyHyHlgudpCHrnFWW2qYburuE3GHSuhL1g&s=10"
+                alt="Candy Crush Saga"
+            >
 
             <div>
                 <h2>Candy Crush Saga</h2>
-                <p>Um dos jogos mobile mais populares de todos os tempos.</p>
+
+                <p>
+                    Um dos jogos mobile mais populares de todos os tempos.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
 
 
-        <section class="jogo">
-            <span class="posicao">7</span>
+        <section class="jogo" data-nome="PUBG Mobile">
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQByRltVu0TI4sEhGBIuL6bXDZWvl-tVb7Nglf0WINFCA&s=10
-                " alt="PUBG Mobile">
+            <span class="posicao">6</span>
+
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQByRltVu0TI4sEhGBIuL6bXDZWvl-tVb7Nglf0WINFCA&s=10"
+                alt="PUBG Mobile"
+            >
 
             <div>
                 <h2>PUBG Mobile</h2>
-                <p>Battle Royale muito popular em dispositivos móveis.</p>
+
+                <p>
+                    Battle Royale muito popular em dispositivos móveis.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
 
 
-        <section class="jogo">
-            <span class="posicao">8</span>
+        <section class="jogo" data-nome="Valorant">
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC7yroDOi2IF-r9no9urXq0Z4P8QR7rN3EsR8ookla3Q&s=10" alt="Valorant">
+            <span class="posicao">7</span>
+
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC7yroDOi2IF-r9no9urXq0Z4P8QR7rN3EsR8ookla3Q&s=10"
+                alt="Valorant"
+            >
 
             <div>
                 <h2>Valorant</h2>
-                <p>FPS tático competitivo desenvolvido pela Riot Games.</p>
+
+                <p>
+                    FPS tático competitivo desenvolvido pela Riot Games.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
 
 
-        <section class="jogo">
-            <span class="posicao">9</span>
+        <section class="jogo" data-nome="Counter-Strike 2">
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRemFfF1jhyLl7xw3lLJ9Ei2eOi5ZG5gWzAbQAhRLkwQ&s=10" alt="Counter-Strike 2">
+            <span class="posicao">8</span>
+
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRemFfF1jhyLl7xw3lLJ9Ei2eOi5ZG5gWzAbQAhRLkwQ&s=10"
+                alt="Counter-Strike 2"
+            >
 
             <div>
                 <h2>Counter-Strike 2</h2>
-                <p>Um dos FPS competitivos mais conhecidos do mundo.</p>
+
+                <p>
+                    Um dos FPS competitivos mais conhecidos do mundo.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
 
 
-        <section class="jogo">
-            <span class="posicao">10</span>
+        <section class="jogo" data-nome="GTA V">
 
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAh46zbbTfy0EQ2EDHUMPmAlKKMA_vigQJo4d3xuNkbQ&s=10" alt="GTA V">
+            <span class="posicao">9</span>
+
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAh46zbbTfy0EQ2EDHUMPmAlKKMA_vigQJo4d3xuNkbQ&s=10"
+                alt="GTA V"
+            >
 
             <div>
                 <h2>GTA V</h2>
-                <p>Jogo de mundo aberto com uma enorme comunidade online.</p>
+
+                <p>
+                    Jogo de mundo aberto com uma enorme comunidade online.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
             </div>
+
         </section>
+
+
+        <section class="jogo" data-nome="Free Fire">
+
+            <span class="posicao">10</span>
+
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAh46zbbTfy0EQ2EDHUMPmAlKKMA_vigQJo4d3xuNkbQ&s=10"
+                alt="Free Fire"
+            >
+
+            <div>
+                <h2>Free Fire</h2>
+
+                <p>
+                    Battle Royale muito popular em dispositivos móveis.
+                </p>
+
+                <button class="favorito">
+                    ♡ Favorito
+                </button>
+            </div>
+
+        </section>
+
+
+        <div id="semResultado">
+            😕 Nenhum jogo encontrado.
+        </div>
 
     </main>
 
 
+    <!-- RODAPÉ -->
+
     <footer>
+
         <p>🎮 Top 10 Jogos Mais Jogados do Mundo</p>
+
+        <br>
+
+        <p>Feito com HTML, CSS e JavaScript ❤️</p>
+
     </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        const pesquisa = document.getElementById("pesquisa");
+
+        const jogos = document.querySelectorAll(".jogo");
+
+        const contador = document.getElementById("contador");
+
+        const semResultado =
+            document.getElementById("semResultado");
+
+        const modoEscuro =
+            document.getElementById("modoEscuro");
+
+
+        /* PESQUISA */
+
+        pesquisa.addEventListener("input", function () {
+
+            const texto =
+                pesquisa.value.toLowerCase().trim();
+
+            let encontrados = 0;
+
+            jogos.forEach(function (jogo) {
+
+                const nome =
+                    jogo.dataset.nome.toLowerCase();
+
+                if (nome.includes(texto)) {
+
+                    jogo.style.display = "flex";
+
+                    encontrados++;
+
+                } else {
+
+                    jogo.style.display = "none";
+
+                }
+
+            });
+
+            contador.textContent =
+                encontrados +
+                (encontrados === 1
+                    ? " jogo encontrado"
+                    : " jogos encontrados");
+
+            if (encontrados === 0) {
+
+                semResultado.style.display = "block";
+
+            } else {
+
+                semResultado.style.display = "none";
+
+            }
+
+        });
+
+
+        /* MODO ESCURO */
+
+        modoEscuro.addEventListener("click", function () {
+
+            document.body.classList.toggle("escuro");
+
+            if (
+                document.body.classList.contains("escuro")
+            ) {
+
+                modoEscuro.textContent =
+                    "☀️ Modo claro";
+
+            } else {
+
+                modoEscuro.textContent =
+                    "🌙 Modo escuro";
+
+            }
+
+        });
+
+
+        /* FAVORITOS */
+
+        const favoritos =
+            document.querySelectorAll(".favorito");
+
+        favoritos.forEach(function (botao) {
+
+            botao.addEventListener("click", function (evento) {
+
+                evento.stopPropagation();
+
+                botao.classList.toggle("ativo");
+
+                if (
+                    botao.classList.contains("ativo")
+                ) {
+
+                    botao.textContent =
+                        "❤️ Favoritado";
+
+                } else {
+
+                    botao.textContent =
+                        "♡ Favorito";
+
+                }
+
+            });
+
+        });
+
+
+        /* CLIQUE NO JOGO */
+
+        jogos.forEach(function (jogo) {
+
+            jogo.addEventListener("click", function () {
+
+                const nome =
+                    jogo.querySelector("h2").textContent;
+
+                const descricao =
+                    jogo.querySelector("p").textContent;
+
+                alert(
+                    "🎮 " + nome +
+                    "\n\n" +
+                    descricao +
+                    "\n\n" +
+                    "Você selecionou este jogo!"
+                );
+
+            });
+
+        });
+
+
+        /* ANIMAÇÃO */
+
+        window.addEventListener("load", function () {
+
+            jogos.forEach(function (jogo, index) {
+
+                setTimeout(function () {
+
+                    jogo.classList.add("aparecer");
+
+                }, index * 120);
+
+            });
+
+        });
+
+    </script>
 
 </body>
 </html>
